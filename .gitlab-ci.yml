@@ -18,10 +18,10 @@ test:
   script:
     - pip install unittest-xml-reporting coverage && oca_install_addons && oca_init_test_database
     - oca_run_tests
-    - ls test_results
+    # generate coverage report
     - coverage html -d htmlcov && coverage xml -o coverage.xml
-    # read line-rate from coverage.xml
-    - python -c "import re; print('total ' + str(float(re.search(r'line-rate=\"([0-9.]+)\"', open('coverage.xml').read()).group(1))*100) + '%')"
+    # read line-rate from coverage.xml and print it as percentage
+    - total=$(grep -oP '<coverage[^>]*line-rate="\K[0-9.]+' coverage.xml | head -n 1 | awk '{print $1 * 100}') && echo "total ${total}%"
   coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   artifacts:
     paths:
