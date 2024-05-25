@@ -26,6 +26,7 @@ test:
     - oca_run_tests
     - ls test_results
     - coverage html -d htmlcov && coverage xml -o coverage.xml
+    - cat coverage.xml
   coverage: '/Code coverage ([0-9]{1,3})/'
   artifacts:
     paths:
