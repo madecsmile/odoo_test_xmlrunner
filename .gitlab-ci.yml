@@ -20,14 +20,12 @@ test:
   tags:
     - galaxy-docker-shared
   script:
-    - pip install unittest-xml-reporting coverage
-    - oca_install_addons
-    - oca_init_test_database
+    - pip install unittest-xml-reporting coverage && oca_install_addons && oca_init_test_database
     - oca_run_tests
     - ls test_results
     - coverage html -d htmlcov && coverage xml -o coverage.xml
     # read line-rate from coverage.xml
-    - python -c "import re; print(re.search(r'line-rate=\"([0-9.]+)\"', open('coverage.xml').read()).group(1))"
+    - python -c "import re; print('Code coverage ' + re.search(r'line-rate=\"([0-9.]+)\"', open('coverage.xml').read()).group(1))"
   coverage: '/Code coverage ([0-9]{1,3})/'
   artifacts:
     paths:
