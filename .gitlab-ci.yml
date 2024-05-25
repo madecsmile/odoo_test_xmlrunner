@@ -24,7 +24,7 @@ test:
     - oca_install_addons
     - oca_init_test_database
     - oca_run_tests
-    - cat .coverage
+    - ls test_results
   coverage: '/Code coverage ([0-9]{1,3})/'
   artifacts:
     paths:
