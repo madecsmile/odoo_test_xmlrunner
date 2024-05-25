@@ -10,3 +10,7 @@ class ModTest(TransactionCase):
     def test_01(self):
         print("test_01")
         self.assertTrue(False, "This test should fail")
+
+    def test_02(self):
+        print("test_02")
+        self.assertTrue(True, "This test should pass")
