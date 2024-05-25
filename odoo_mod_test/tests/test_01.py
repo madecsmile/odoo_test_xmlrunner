@@ -1,5 +1,8 @@
 from odoo.tests.common import TransactionCase
+from odoo.tests import tagged
 
+
+@tagged("post_install", "-at_install")
 class ModTest(TransactionCase):
     def setUp(self):
         super(ModTest, self).setUp()
