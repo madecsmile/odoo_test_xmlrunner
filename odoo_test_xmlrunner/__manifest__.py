@@ -1,7 +1,7 @@
 {
     "name": "Unittest xUnit reports",
     "version": "17.0.0.0.0",
-    "depends": ["base", "sale"],
+    "depends": ["base",],
     "author": "martin.deconinck@smile.fr",
     "license": "AGPL-3",
     "description": "This module override Odoo testing method to run them with xmlrunner tool.",

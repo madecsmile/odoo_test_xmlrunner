@@ -9,4 +9,4 @@ class ModTest(TransactionCase):
 
     def test_01(self):
         print("test_01")
-        self.assertTrue(True)
+        self.assertTrue(False, "This test should fail")
