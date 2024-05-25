@@ -1,0 +1,56 @@
+# Unittest xUnit reports
+
+This module generate unittest reports using unittest-xml-reporting tool.
+
+## Requirements
+
+Python library https://pypi.org/project/unittest-xml-reporting/
+
+## Configuration
+
+Add to your odoo Configuration file:
+- **test_result_directory** (default: *test_results*) : The path (created if not exists) where the reports will be written to.
+
+## Usage in CI
+
+### Gitlab
+
+Add the following job to your `.gitlab-ci.yml` file:
+
+```yaml
+
+stages:
+  - test
+
+variables:
+  POSTGRES_DB: odoo
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: odoo
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+test:
+  stage: test
+  image:
+    name: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
+  services:
+    - name: postgres:15
+  tags:
+    - gitlab-org-docker
+  script:
+    # install odoo and run tests
+    - oca_install_addons && oca_init_test_database && oca_run_tests
+    # generate coverage report
+    - coverage html -d htmlcov && coverage xml -o coverage.xml
+    # read line-rate from coverage.xml and print it as percentage
+    - total=$(grep -oP '<coverage[^>]*line-rate="\K[0-9.]+' coverage.xml | head -n 1 | awk '{print $1 * 100}') && echo "total ${total}%"
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    paths:
+      - htmlcov/*
+    when: always
+    reports:
+      junit: test_results/*.xml
+      coverage_report:
+          coverage_format: cobertura
+          path: coverage.xml
+```
