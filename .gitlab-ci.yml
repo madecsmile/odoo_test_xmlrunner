@@ -1,0 +1,32 @@
+ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
+
+
+# This CI-CD build / push the local Dockerfile, using project.env variables
+
+# build and push docker image in all dirs
+
+image: docker:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  POSTGRES_DB: odoo
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: odoo
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+test:
+  stage: test
+  image:
+    name: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
+  services:
+    - name: postgres:15
+  tags:
+    - galaxy-docker-shared
+  script:
+    - oca_install_addons
+    - oca_init_test_database
+    - oca_run_tests
