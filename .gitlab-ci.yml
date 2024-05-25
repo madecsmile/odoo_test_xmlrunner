@@ -24,3 +24,4 @@ test:
     - oca_install_addons
     - oca_init_test_database
     - oca_run_tests
+    - ls -alh
