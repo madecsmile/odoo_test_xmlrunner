@@ -20,6 +20,7 @@ test:
   tags:
     - galaxy-docker-shared
   script:
+    - pip install unittest-xml-reporting
     - oca_install_addons
     - oca_init_test_database
     - oca_run_tests
