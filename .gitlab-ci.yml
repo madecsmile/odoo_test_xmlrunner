@@ -16,8 +16,7 @@ test:
   tags:
     - galaxy-docker-shared
   script:
-    - pip install unittest-xml-reporting coverage && oca_install_addons && oca_init_test_database
-    - oca_run_tests
+    - oca_install_addons && oca_init_test_database && oca_run_tests
     # generate coverage report
     - coverage html -d htmlcov && coverage xml -o coverage.xml
     # read line-rate from coverage.xml and print it as percentage
